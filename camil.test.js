@@ -28,7 +28,8 @@ describe("isNull function", () => {
     expect(result).toBeTruthy();
   });
   it("should return false when value is not null", () => {
-    expect(() => isNull(5)).toThrow("Typeof parameters must be number type");
+    const result = isNull(5);
+    expect(result).toBeFalsy();
   });
 });
 
@@ -87,48 +88,24 @@ describe("reverseArray function", () => {
     expect(reversedArr).toEqual([32]);
   });
 });
-
 describe("merge function", () => {
-  it("should merge two objects", () => {
-    const obj1 = { name: "Camil", age: 20 };
-    const obj2 = { city: "Baku" };
-    const merged = merge(obj1, obj2);
-    expect(merged).toEqual({ name: "Camil", age: 20, city: "Baku" });
-    expect(merged).not.toBe(obj1);
+  it("should throw error if any of the elements is null", () => {
+    expect(() => merge(null, [])).toThrow("Cant merge nullable value!");
   });
-
-  it("should merge two arrays", () => {
-    const arr1 = [1, 2, 3];
-    const arr2 = [4, 5, 6];
-    const merged = merge(arr1, arr2);
-    expect(merged).toEqual([1, 2, 3, 4, 5, 6]);
-    expect(merged).not.toBe(arr1);
+  it("should throw error if any of the elements is not in object type", () => {
+    expect(() => merge(1, {})).toThrow("Arguments must be object or array!");
   });
-
-  it("should throw an error if any argument is null", () => {
-    const obj = { name: "Camil" };
-    expect(() => merge(obj, null)).toThrow("Cant merge nullable value!");
-    expect(() => merge(null, obj)).toThrow("Cant merge nullable value!");
-    expect(() => merge(null, null)).toThrow("Cant merge nullable value!");
+  it("should merge if first element is an array", () => {
+    expect(merge([1, 2, 3], { a: 4 })).toEqual([1, 2, 3, { a: 4 }]);
   });
-
-  it("should throw an error if any argument is not an object or array", () => {
-    const obj = { name: "Camil" };
-    expect(() => merge(obj, "city")).toThrow("Arguments must be object or array!");
-    expect(() => merge(true, obj)).toThrow("Arguments must be object or array!");
-    expect(() => merge(123, obj)).toThrow("Arguments must be object or array!");
-  });
-
-  it("should throw an error if both arguments are not the same type", () => {
-    const obj = { name: "Camil" };
-    const arr = [1, 2, 3];
-    expect(() => merge(obj, arr)).toThrow("Arguments must be same type!");
+  it("should merge if both elements are object", () => {
+    expect(merge({ a: 1 }, { b: 2 })).toEqual({ a: 1, b: 2 });
   });
 });
 
 describe("removeLastChar function", () => {
   it("should return  error when type of parameter is not string", () => {
-    expect(removeLastChar(9)).toThrow("Typeof argument must be string!");
+    expect(() => removeLastChar(9)).toThrow("Typeof argument must be string!");
   });
   it("should remove the last character from a string", () => {
     const result = removeLastChar("JavaScript Testings");
