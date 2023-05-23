@@ -117,27 +117,21 @@ describe("removeLastChar function", () => {
   });
 });
 describe("testStatement", () => {
-  it("should return truthyValue if statement is true", () => {
+  it("should return Truthy if statement is true", () => {
     const statement = true;
-    const truthyValue = "Truthy";
-    const falsyValue = "Falsy";
-    const result = testStatement(statement, truthyValue, falsyValue);
-    expect(result).toBe(truthyValue);
+    const result = testStatement(true, "Truthy", "Falsy");
+    expect(result).toBe("Truthy");
   });
 
-  it("should return falsyValue if statement is false", () => {
+  it("should return Falsy if statement is false", () => {
     const statement = false;
-    const truthyValue = "Truthy";
-    const falsyValue = "Falsy";
-    const result = testStatement(statement, truthyValue, falsyValue);
-    expect(result).toBe(falsyValue);
+    const result = testStatement(statement, "Truthy", "Falsy");
+    expect(result).toBe("Falsy");
   });
 
   it("should throw an error if the statement is not a boolean", () => {
     const statement = "is not boolean";
-    const truthyValue = "Truthy";
-    const falsyValue = "Falsy";
-    expect(() => testStatement(statement, truthyValue, falsyValue)).toThrow(
+    expect(() => testStatement(statement, "Truthy", "Falsy")).toThrow(
       "Type of first argument must be boolean!"
     );
   });
